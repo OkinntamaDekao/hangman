@@ -1,0 +1,58 @@
+
+def hangman(word):
+    wrong = 0                          
+    stages = [
+        "",
+        "_______       ",
+        "|             ",
+        "|      |      ",
+        "|      0      ",
+        "|     /|\     ",
+        "|     / \     ",
+        "|             "
+        ]                              
+    rletters = list(word)              
+    board = ["_"] * len(word)          
+    win = False
+    print("ハングマンへようこそ！")
+
+    while wrong < len(stages) - 1:
+        print("\n")
+        msg = "1文字予想してね"
+        char = input(msg) 
+        if char in rletters:
+            cind = rletters.index(char)
+            board[cind] = char
+            rletters[cind] = '$'
+        else:
+            wrong += 1
+        print(" ".join(board))
+        e = wrong + 1
+        print("\n".join(stages[0:e]))
+        if "_" not in board:
+            print("あなたの勝ち!")
+            print(" ".join(board))
+            win = True
+            break
+    
+    if not win:
+        print("\n".join(stages[0:wrong + 1]))
+        print("あなたの負け!正解は{}.".format(word))     
+
+def randomstr(x):
+    try:
+        x = int(x)
+    except ValueError:
+        print("数字を指定してください")
+
+
+    list = ["strong","weak","genius"]
+    if x % 3 == 0:
+        return list[0]
+    elif x % 3 == 1:
+        return list[1]
+    elif x % 3 == 2:
+        return list[2]
+
+a = input("数値を入力してください。その数値から文字列を生成します:")
+hangman(randomstr(a))
